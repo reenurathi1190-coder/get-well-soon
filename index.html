@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A Little Something For You 💗</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Segoe UI", sans-serif;
+    min-height: 100vh;
+    overflow: hidden;
+    background: linear-gradient(135deg, #ffdce8, #e9ddff, #dff6ff);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Floating background hearts */
+.heart {
+    position: fixed;
+    bottom: -50px;
+    font-size: 25px;
+    animation: float 8s linear infinite;
+    opacity: 0.7;
+    pointer-events: none;
+}
+
+.heart:nth-child(1) { left: 10%; animation-delay: 0s; }
+.heart:nth-child(2) { left: 25%; animation-delay: 2s; }
+.heart:nth-child(3) { left: 45%; animation-delay: 4s; }
+.heart:nth-child(4) { left: 70%; animation-delay: 1s; }
+.heart:nth-child(5) { left: 90%; animation-delay: 3s; }
+
+@keyframes float {
+    0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 0;
+    }
+    20% {
+        opacity: 0.8;
+    }
+    100% {
+        transform: translateY(-110vh) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+/* Main card */
+
+.container {
+    width: 90%;
+    max-width: 520px;
+    min-height: 560px;
+    position: relative;
+    z-index: 2;
+}
+
+.card {
+    width: 100%;
+    min-height: 560px;
+    padding: 45px 30px;
+    border-radius: 35px;
+    background: rgba(255,255,255,0.82);
+    backdrop-filter: blur(15px);
+    box-shadow: 0 20px 60px rgba(90,50,100,0.2);
+    text-align: center;
+
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    animation: slideIn 0.7s ease;
+}
+
+.card.active {
+    display: flex;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateX(60px) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0) scale(1);
+    }
+}
+
+.emoji {
+    font-size: 75px;
+    animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+    0%,100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-12px);
+    }
+}
+
+h1 {
+    color: #d94f7d;
+    font-size: 42px;
+    margin: 15px 0 8px;
+}
+
+h2 {
+    color: #76577e;
+    margin-bottom: 18px;
+}
+
+p {
+    color: #555;
+    line-height: 1.7;
+    font-size: 17px;
+    max-width: 420px;
+}
+
+.message {
+    margin-top: 20px;
+    padding: 20px;
+    border-radius: 20px;
+    background: #fff0f6;
+    color: #694c60;
+    line-height: 1.6;
+}
+
+/* Buttons */
+
+button {
+    margin-top: 25px;
+    padding: 14px 30px;
+    border: none;
+    border-radius: 30px;
+    background: #d94f7d;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.3s;
+    box-shadow: 0 7px 20px rgba(217,79,125,0.25);
+}
+
+button:hover {
+    transform: scale(1.08);
+    background: #c83d6d;
+}
+
+.back {
+    background: #9878a8;
+}
+
+/* Progress dots */
+
+.progress {
+    position: fixed;
+    bottom: 18px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 8px;
+    z-index: 5;
+}
+
+.dot {
+    width: 9px;
+    height: 9px;
+    background: rgba(255,255,255,0.6);
+    border-radius: 50%;
+}
+
+.dot.active {
+    background: #d94f7d;
+    transform: scale(1.4);
+}
+
+/* Surprise */
+
+#surprise {
+    display: none;
+    margin-top: 20px;
+    font-size: 18px;
+    color: #d94f7d;
+    animation: pop 0.6s ease;
+}
+
+@keyframes pop {
+    0% {
+        transform: scale(0);
+    }
+    70% {
+        transform: scale(1.15);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* Sparkles */
+
+.sparkle {
+    position: fixed;
+    pointer-events: none;
+    animation: sparkle 1s ease-out forwards;
+}
+
+@keyframes sparkle {
+    0% {
+        transform: scale(0);
+        opacity: 1;
+    }
+
+    100% {
+        transform: translateY(-80px) scale(1.5);
+        opacity: 0;
+    }
+}
+
+/* Small screen */
+
+@media(max-width:600px) {
+    .container {
+        width: 92%;
+    }
+
+    .card {
+        min-height: 520px;
+        padding: 30px 20px;
+    }
+
+    h1 {
+        font-size: 34px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- Floating hearts -->
+<div class="heart">💗</div>
+<div class="heart">💕</div>
+<div class="heart">💖</div>
+<div class="heart">💗</div>
+<div class="heart">💞</div>
+
+
+<div class="container">
+
+    <!-- SLIDE 1 -->
+
+    <div class="card active">
+
+        <div class="emoji">💌</div>
+
+        <h1>Hey You...</h1>
+
+        <h2>I made something for you.</h2>
+
+        <p>
+            It's small, but I hope it makes you smile
+            even for a little while. 🥹
+        </p>
+
+        <button onclick="nextSlide()">
+            Open it 💗
+        </button>
+
+    </div>
+
+
+    <!-- SLIDE 2 -->
+
+    <div class="card">
+
+        <div class="emoji">🩹🦵</div>
+
+        <h1>GET WELL SOON!</h1>
+
+        <p>
+            I heard that your leg got injured...
+            so obviously I had to make you a little
+            recovery website. 😭
+        </p>
+
+        <div class="message">
+            Please take proper rest, don't overdo anything,
+            and give your leg some time to heal. 🫶
+        </div>
+
+        <button onclick="nextSlide()">
+            Continue → 
+        </button>
+
+    </div>
+
+
+    <!-- SLIDE 3 -->
+
+    <div class="card">
+
+        <div class="emoji">🥺</div>
+
+        <h1>One Rule.</h1>
+
+        <p>
+            You are officially NOT allowed to pretend
+            you're completely fine and then start doing
+            everything normally. 😭
+        </p>
+
+        <div class="message">
+            REST.  
+            HEAL.  
+            RECOVER.  
+            Repeat. 💗
+        </div>
+
+        <button onclick="nextSlide()">
+            Okay okay 😭 →
+        </button>
+
+    </div>
+
+
+    <!-- SLIDE 4 -->
+
+    <div class="card">
+
+        <div class="emoji">🌷</div>
+
+        <h1>For You</h1>
+
+        <p>
+            I hope every day gets a little easier,
+            every step gets a little better,
+            and you're back to doing all your
+            favourite things soon.
+        </p>
+
+        <div class="message">
+            Sending you lots of positive energy,
+            good wishes and approximately
+            738291 hearts. 💗
+        </div>
+
+        <button onclick="nextSlide()">
+            There's more... 👀
+        </button>
+
+    </div>
+
+
+    <!-- SLIDE 5 -->
+
+    <div class="card">
+
+        <div class="emoji">🎁</div>
+
+        <h1>Secret Button</h1>
+
+        <p>
+            I may or may not have hidden
+            a little message here...
+        </p>
+
+        <button onclick="showSurprise()">
+            DON'T CLICK THIS 👀
+        </button>
+
+        <div id="surprise">
+            I TOLD YOU NOT TO CLICK IT 😭💗
+            <br><br>
+            But since you did...
+            <br>
+            <b>GET WELL SOON, IDIOT. 🫶</b>
+        </div>
+
+        <button onclick="nextSlide()">
+            Final page → 💌
+        </button>
+
+    </div>
+
+
+    <!-- SLIDE 6 -->
+
+    <div class="card">
+
+        <div class="emoji">💗✨</div>
+
+        <h1>One Last Thing...</h1>
+
+        <p>
+            Take care of yourself.
+            Don't rush your recovery.
+            And remember that someone is
+            wishing you well. 🫶
+        </p>
+
+        <div class="message">
+            <b>Get well soon! 🌷</b>
+            <br><br>
+            Hope you're back on your feet
+            and smiling again very soon. 💗
+        </div>
+
+        <button onclick="celebrate()">
+            Click for a final surprise ✨
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- Progress dots -->
+
+<div class="progress">
+
+    <div class="dot active"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+
+</div>
+
+
+<script>
+
+let currentSlide = 0;
+
+const cards = document.querySelectorAll(".card");
+const dots = document.querySelectorAll(".dot");
+
+
+function showSlide(index) {
+
+    cards.forEach(card => {
+        card.classList.remove("active");
+    });
+
+    dots.forEach(dot => {
+        dot.classList.remove("active");
+    });
+
+    cards[index].classList.add("active");
+    dots[index].classList.add("active");
+
+}
+
+
+function nextSlide() {
+
+    if (currentSlide < cards.length - 1) {
+
+        currentSlide++;
+
+        showSlide(currentSlide);
+
+    }
+
+}
+
+
+function showSurprise() {
+
+    document.getElementById("surprise").style.display = "block";
+
+    createSparkles();
+
+}
+
+
+function createSparkles() {
+
+    for(let i = 0; i < 25; i++) {
+
+        let sparkle = document.createElement("div");
+
+        sparkle.className = "sparkle";
+
+        sparkle.innerHTML = "✨";
+
+        sparkle.style.left = Math.random() * 100 + "vw";
+        sparkle.style.top = Math.random() * 100 + "vh";
+
+        document.body.appendChild(sparkle);
+
+        setTimeout(() => {
+            sparkle.remove();
+        }, 1000);
+
+    }
+
+}
+
+
+function celebrate() {
+
+    createSparkles();
+
+    for(let i = 0; i < 15; i++) {
+
+        let heart = document.createElement("div");
+
+        heart.innerHTML = "💗";
+
+        heart.style.position = "fixed";
+        heart.style.left = Math.random() * 100 + "vw";
+        heart.style.top = Math.random() * 100 + "vh";
+        heart.style.fontSize = "30px";
+        heart.style.zIndex = "10";
+
+        document.body.appendChild(heart);
+
+        heart.animate(
+            [
+                { transform: "scale(0)", opacity: 0 },
+                { transform: "scale(1.5)", opacity: 1 },
+                { transform: "translateY(-150px)", opacity: 0 }
+            ],
+            {
+                duration: 1800,
+                easing: "ease-out"
+            }
+        );
+
+        setTimeout(() => {
+            heart.remove();
+        }, 1800);
+
+    }
+
+}
+
+</script>
+
+</body>
+</html>
