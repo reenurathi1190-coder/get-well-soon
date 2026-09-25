@@ -1,1 +1,650 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<title>Do You Love Me?</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    height: 100vh;
+    overflow: hidden;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #ffd6e7, #ffc1dc);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background 1s ease;
+}
+
+.container {
+    text-align: center;
+    position: relative;
+    z-index: 5;
+}
+
+h1 {
+    color: #8b174b;
+    font-size: clamp(32px, 7vw, 60px);
+    margin-bottom: 35px;
+}
+
+.buttons {
+    display: flex;
+    gap: 25px;
+    justify-content: center;
+    align-items: center;
+}
+
+button {
+    border: none;
+    padding: 15px 35px;
+    font-size: 20px;
+    border-radius: 50px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+#yes {
+    background: #ff4f9a;
+    color: white;
+    box-shadow: 0 8px 25px rgba(255, 79, 154, 0.4);
+}
+
+#yes:hover {
+    transform: scale(1.1);
+}
+
+#no {
+    background: white;
+    color: #555;
+    position: relative;
+}
+
+/* STARS */
+
+.star {
+    position: fixed;
+    width: 7px;
+    height: 7px;
+    background: white;
+    border-radius: 50%;
+    pointer-events: none;
+    animation: starFloat 2s linear forwards;
+}
+
+@keyframes starFloat {
+    0% {
+        transform: translateY(0) scale(0.5);
+        opacity: 0;
+    }
+
+    30% {
+        opacity: 1;
+    }
+
+    100% {
+        transform: translateY(-180px) scale(1.5);
+        opacity: 0;
+    }
+}
+
+/* ENVELOPE */
+
+.card {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    animation: appear 1s ease forwards;
+}
+
+@keyframes appear {
+    from {
+        opacity: 0;
+        transform: scale(0.5) rotate(-8deg);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1) rotate(0);
+    }
+}
+
+.envelope {
+    width: 300px;
+    height: 190px;
+    position: relative;
+    cursor: pointer;
+    margin-bottom: 30px;
+    filter: drop-shadow(0 15px 25px rgba(0,0,0,0.3));
+}
+
+.envelope-body {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: #1976d2;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.envelope-body::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+
+    border-left: 150px solid transparent;
+    border-right: 150px solid transparent;
+    border-top: 100px solid #4da3ff;
+}
+
+.envelope-body::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+
+    border-left: 150px solid #0d5bb5;
+    border-right: 150px solid #0d5bb5;
+    border-top: 90px solid transparent;
+}
+
+/* CAR */
+
+.car {
+    position: absolute;
+    z-index: 10;
+    font-size: 55px;
+
+    left: 50%;
+    top: 52%;
+
+    transform: translate(-50%, -50%);
+
+    animation: carBounce 1.5s infinite alternate;
+}
+
+@keyframes carBounce {
+    from {
+        transform: translate(-50%, -50%) translateY(0);
+    }
+
+    to {
+        transform: translate(-50%, -50%) translateY(-8px);
+    }
+}
+
+.openText {
+    font-size: 20px;
+    color: #8ecbff;
+    font-weight: bold;
+}
+
+/* LIGHTNING */
+
+.lightning {
+    position: fixed;
+    inset: 0;
+
+    background: rgba(150, 220, 255, 0.85);
+
+    z-index: 20;
+    pointer-events: none;
+
+    opacity: 0;
+}
+
+.flash {
+    animation: lightning 0.8s ease;
+}
+
+@keyframes lightning {
+
+    0%,100% {
+        opacity: 0;
+    }
+
+    15% {
+        opacity: 1;
+    }
+
+    25% {
+        opacity: 0.1;
+    }
+
+    40% {
+        opacity: 0.9;
+    }
+
+    60% {
+        opacity: 0.2;
+    }
+}
+
+/* MESSAGE */
+
+.message {
+    display: none;
+
+    max-width: 90%;
+
+    padding: 25px 30px;
+
+    background: rgba(255,255,255,0.95);
+
+    border-radius: 25px;
+
+    color: #073b70;
+
+    font-size: 24px;
+
+    font-weight: bold;
+
+    box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+
+    animation: messageIn 1s ease;
+
+    cursor: pointer;
+}
+
+@keyframes messageIn {
+
+    from {
+        opacity: 0;
+        transform: translateY(50px) scale(0.7);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* LAUGH */
+
+.laugh {
+    font-size: 65px;
+    margin-top: 15px;
+
+    animation: laugh 0.7s infinite alternate;
+}
+
+@keyframes laugh {
+
+    from {
+        transform: rotate(-10deg) scale(1);
+    }
+
+    to {
+        transform: rotate(10deg) scale(1.15);
+    }
+}
+
+/* FINAL */
+
+.final {
+    display: none;
+
+    flex-direction: column;
+    align-items: center;
+
+    animation: finalIn 1s ease;
+}
+
+.final h2 {
+    font-size: 65px;
+    color: #9edcff;
+    margin: 10px;
+}
+
+.bmw {
+    font-size: 80px;
+
+    animation: drive 2s infinite alternate;
+}
+
+@keyframes drive {
+
+    from {
+        transform: translateX(-30px);
+    }
+
+    to {
+        transform: translateX(30px);
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- QUESTION -->
+
+    <div id="question">
+
+        <h1>Do you love me? 💗</h1>
+
+        <div class="buttons">
+
+            <button id="yes">
+                YES 💗
+            </button>
+
+            <button id="no">
+                NO 😭
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- ENVELOPE -->
+
+    <div class="card" id="card">
+
+        <div class="envelope" id="envelope">
+
+            <div class="envelope-body"></div>
+
+            <div class="car">
+                🚙
+            </div>
+
+        </div>
+
+        <div class="openText">
+            Click the envelope 💙
+        </div>
+
+    </div>
+
+
+    <!-- FIRST MESSAGE -->
+
+    <div class="message" id="message">
+
+        jaakr padh le .. faltu karname mt kr idhar 😭
+        <br><br>
+        padhai is more important 📚
+
+    </div>
+
+
+    <!-- SECOND MESSAGE -->
+
+    <div class="message" id="secondMessage">
+
+        baal peeche krle 😭
+
+        <div class="laugh">
+            😂
+        </div>
+
+    </div>
+
+
+    <!-- FINAL -->
+
+    <div class="final" id="final">
+
+        <div class="bmw">
+            🚘
+        </div>
+
+        <h2>
+            BYE 👋
+        </h2>
+
+    </div>
+
+</div>
+
+
+<div class="lightning" id="lightning"></div>
+
+
+<script>
+
+const yes = document.getElementById("yes");
+
+const no = document.getElementById("no");
+
+const question = document.getElementById("question");
+
+const card = document.getElementById("card");
+
+const envelope = document.getElementById("envelope");
+
+const message = document.getElementById("message");
+
+const secondMessage =
+    document.getElementById("secondMessage");
+
+const final =
+    document.getElementById("final");
+
+const lightning =
+    document.getElementById("lightning");
+
+let stage = 0;
+
+
+/* NO BUTTON RUNS AWAY */
+
+function escapeNo() {
+
+    const maxX =
+        window.innerWidth - no.offsetWidth - 20;
+
+    const maxY =
+        window.innerHeight - no.offsetHeight - 20;
+
+    const x =
+        Math.random() * Math.max(maxX, 20);
+
+    const y =
+        Math.random() * Math.max(maxY, 20);
+
+    no.style.position = "fixed";
+
+    no.style.left = x + "px";
+
+    no.style.top = y + "px";
+}
+
+
+no.addEventListener(
+    "mouseenter",
+    escapeNo
+);
+
+
+no.addEventListener(
+    "touchstart",
+    function(e) {
+
+        e.preventDefault();
+
+        escapeNo();
+
+    }
+);
+
+
+/* YES BUTTON */
+
+yes.addEventListener(
+    "click",
+    function() {
+
+        question.style.display = "none";
+
+        document.body.style.background =
+            "linear-gradient(135deg, #071b3a, #123c70)";
+
+        createStars();
+
+        setTimeout(
+            function() {
+
+                card.style.display = "flex";
+
+            },
+            700
+        );
+
+    }
+);
+
+
+/* STARS */
+
+function createStars() {
+
+    for (let i = 0; i < 80; i++) {
+
+        setTimeout(
+            function() {
+
+                const star =
+                    document.createElement("div");
+
+                star.className = "star";
+
+                star.style.left =
+                    Math.random() *
+                    window.innerWidth +
+                    "px";
+
+                star.style.top =
+                    Math.random() *
+                    window.innerHeight +
+                    "px";
+
+                star.style.animationDuration =
+                    (1 + Math.random() * 2) +
+                    "s";
+
+                document.body.appendChild(star);
+
+                setTimeout(
+                    function() {
+
+                        star.remove();
+
+                    },
+                    2500
+                );
+
+            },
+            i * 30
+        );
+
+    }
+
+}
+
+
+/* ENVELOPE */
+
+envelope.addEventListener(
+    "click",
+    function() {
+
+        if (stage !== 0) return;
+
+        stage = 1;
+
+        lightning.classList.add("flash");
+
+        setTimeout(
+            function() {
+
+                card.style.display = "none";
+
+                message.style.display = "block";
+
+            },
+            500
+        );
+
+        setTimeout(
+            function() {
+
+                lightning.classList.remove("flash");
+
+            },
+            900
+        );
+
+    }
+);
+
+
+/* FIRST MESSAGE */
+
+message.addEventListener(
+    "click",
+    function() {
+
+        if (stage !== 1) return;
+
+        stage = 2;
+
+        message.style.display = "none";
+
+        setTimeout(
+            function() {
+
+                secondMessage.style.display =
+                    "block";
+
+            },
+            300
+        );
+
+    }
+);
+
+
+/* SECOND MESSAGE */
+
+secondMessage.addEventListener(
+    "click",
+    function() {
+
+        if (stage !== 2) return;
+
+        stage = 3;
+
+        secondMessage.style.display =
+            "none";
+
+        setTimeout(
+            function() {
+
+                final.style.display =
+                    "flex";
+
+            },
+            300
+        );
+
+    }
+);
+
+</script>
+
+</body>
+</html>
